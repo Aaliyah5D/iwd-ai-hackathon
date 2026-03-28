@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #FF85A1; /* Vibrant Pink */
+  --color-secondary: #FFE4E9; /* Soft Pink */
+  --color-mint: #C3F0E0;
+  --color-mint-dark: #0D7A53;
+  --color-peach: #FFD9C8;
+  --color-lavender: #EDE9FB;
+  --color-coral: #FFE5E5;
+  --color-text: #4A1D24; /* Deep Maroon */
+  --color-muted: #8B5E66; /* Muted Rose */
+  --color-background: #FFF5F7; /* Pinkish White */
+  --color-border: #FFD1DC; /* Blush */
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text font-sans antialiased;
+  }
+}
+
+@layer components {
+  .pastel-card {
+    @apply bg-white rounded-[24px] p-6 border-[2.5px] border-border shadow-[0_4px_0_0_rgba(255,133,161,0.2)] transition-all active:translate-y-1 active:shadow-none;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white font-black py-4 px-8 rounded-[24px] shadow-[0_6px_0_0_#E66A85] transition-all active:translate-y-1 active:shadow-none;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-text border-[2.5px] border-border font-black py-4 px-8 rounded-[24px] shadow-[0_4px_0_0_#FFD1DC] transition-all active:translate-y-1 active:shadow-none;
+  }
+}

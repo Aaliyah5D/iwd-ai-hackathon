@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--Smart Campus — Safety & security (prototype UI). Includes SOS, live location, safe routes, incident reporting.-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emergency SOS, live location sharing, safe routes, and incident reporting for Smart Campus.">
+    <title>Safety &amp; security — Smart Campus</title>
+    <!-- Base components + tokens: Home / landing -->
+    <link rel="stylesheet" href="landing.css">
+    <!-- Safety page layout + lavender header (same design system as Home) -->
+    <link rel="stylesheet" href="security.css">
+</head>
+</head>
+
+<body class="landing safety-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- Site header: lavender bar + centred nav + profile (matches design spec) -->
+    
+    <header class="landing-header safety-header">
+    <nav class="landing-nav safety-nav" aria-label="Primary">
+
+        <!-- Brand -->
+        <a class="landing-brand" href="/Home.html">
+            Smart <span>Campus</span>
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="landing-nav-links">
+            <li><a href="/Home.html">Home</a></li>
+            <li><a href="/Campus.html">Campus</a></li>
+            <li><a href="/Community.html">Community</a></li>
+            <li><a href="/Health.html">Health</a></li>
+            <li><a href="/Safety.html" class="active">Safety</a></li>
+        </ul>
+
+        <!-- Right Side -->
+        <div class="landing-nav-actions">
+            <a class="btn btn-ghost" href="/login.html">Log in</a>
+            <a class="btn btn-primary" href="/register.html">Register</a>
+
+            <!-- Profile -->
+            <a href="/Profile.html" class="profile-link">
+                <span class="profile-icon">👤</span>
+            </a>
+        </div>
+
+    </nav>
+</header>
+
+    
+<main class="campus-main" id="main">
+        <h1>Safety &amp; security</h1>
+        <p class="campus-lead">
+            Get help quickly, share your location only with people you trust, choose safer routes around campus, and report incidents so the university can act. This page is a prototype—connect buttons and forms to your backend when you build the full app.
+        </p>
+        <!-- Emergency SOS: campus security + selected contacts -->
+        <section class="campus-section" aria-labelledby="sos-heading">
+            <h2 id="sos-heading">Emergency SOS</h2>
+            <p>
+                Press the button to alert campus security and your selected emergency contacts. In a live app this could use a long-press or countdown to reduce accidental triggers.
+            </p>
+            <div class="sos-panel">
+                <button type="button" class="btn-sos" id="sos-demo" aria-describedby="sos-help">
+                    SOS — get help now
+                </button>
+                <p id="sos-help" class="sos-note">
+                    Demo only: no alert is sent. A full version would dial security and notify your chosen contacts by SMS or in-app message.
+                </p>
+                <p class="sos-contacts-preview">
+                    Will notify: <strong>Campus security</strong> + contacts you set in Profile (e.g. trusted friends or family).
+                </p>
+            </div>
+        </section>
+        <!-- Live location sharing -->
+        <section class="campus-section campus-section--align-start" aria-labelledby="location-heading">
+            <h2 id="location-heading">Live location sharing</h2>
+            <p>
+                Share your live location with selected contacts for a limited time—useful when walking late or meeting someone. You stay in control and can stop sharing at any time.
+            </p>
+            <div class="location-panel">
+                <div class="location-toggle">
+                    <label for="share-live">Share live location</label>
+                    <span class="switch">
+                        <input type="checkbox" id="share-live" name="share-live" aria-label="Toggle live location sharing">
+                        <span class="slider" aria-hidden="true"></span>
+                    </span>
+                </div>
+                <h3>Sharing with (selected contacts)</h3>
+                <ul class="contact-chips">
+                    <li>Mum</li>
+                    <li>Alex (flatmate)</li>
+                    <li>SU buddy scheme</li>
+                </ul>
+                <p class="sos-note sos-note--spacing">
+                    In the full app you would choose contacts in Settings and set how long sharing lasts (e.g. 30 minutes or until you arrive).
+                </p>
+            </div>
+        </section>
+        <!-- Safe route navigation -->
+        <section class="campus-section campus-section--align-start" aria-labelledby="route-heading">
+            <h2 id="route-heading">Safe route navigation</h2>
+            <p>
+                Plan a walking route that avoids areas reported as poorly lit, isolated, or higher risk. Data improves when students submit incident reports (see below).
+            </p>
+            <form class="route-form" aria-label="Plan a safe route" onsubmit="return false;">
+                <div>
+                    <label for="route-from">From</label>
+                    <input type="text" id="route-from" name="from" placeholder="e.g. Library entrance" autocomplete="off">
+                </div>
+                <div>
+                    <label for="route-to">To</label>
+                    <input type="text" id="route-to" name="to" placeholder="e.g. Halls — North block" autocomplete="off">
+                </div>
+                <div class="route-options">
+                    <label>
+                        <input type="checkbox" name="avoid" checked>
+                        Avoid reported risk areas where possible
+                    </label>
+                </div>
+                <button type="button" class="btn-route">Plan safe route</button>
+            </form>
+            <div class="map-placeholder" role="img" aria-label="Map preview placeholder">
+                Map preview — route would appear here
+            </div>
+        </section>
+        <!-- Incident report system -->
+        <section class="campus-section campus-section--align-start" aria-labelledby="incident-heading">
+            <h2 id="incident-heading">Incident report</h2>
+            <p>
+                Report harassment, unsafe areas, broken lighting, or anything else that affects safety on campus. Reports can help the university prioritise repairs and patrols.
+            </p>
+            <form class="incident-form" aria-label="Submit an incident report" onsubmit="return false;">
+                <div>
+                    <label for="incident-type">Type of issue</label>
+                    <select id="incident-type" name="type">
+                        <option value="">Choose one</option>
+                        <option value="harassment">Harassment or threatening behaviour</option>
+                        <option value="unsafe-area">Unsafe area (e.g. isolated, poor visibility)</option>
+                        <option value="lighting">Broken or missing lighting</option>
+                        <option value="access">Blocked path or accessibility issue</option>
+                        <option value="other">Other safety concern</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="incident-detail">What happened? Where?</label>
+                    <textarea id="incident-detail" name="detail" placeholder="Describe what you saw or experienced. Include building names or landmarks if you can."></textarea>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="incident-anon" name="anonymous" value="yes">
+                    <label for="incident-anon">Submit without my name attached (where policy allows)</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit report</button>
+            </form>
+        </section>
+    </main>
+    <footer class="landing-footer">
+        <p>
+            <strong>Smart Campus</strong> — safety tools are prototypes until connected to real services.
+            <a href="Home.html">Home</a> · <a href="Campus.html">Campus</a> · <a href="Profile.html">Profile</a>
+        </p>
+    </footer>
+    <script>
+      /* Demo only: acknowledge SOS click without sending data */
+      document.getElementById('sos-demo').addEventListener('click', function () {
+        alert('Demo: in a live app this would contact campus security and your selected contacts.');
+      });
+    </script>
+</body>
+</html>

@@ -102,12 +102,12 @@ ul li{
 :root {
   --ink: #141218;
   --ink-muted: #3d3945;
-  --paper: #faf9fc;
-  --paper-warm: #f2f0f6;
+  --paper: #f2f0f6;
+  --paper-warm: #c8bddd;
   --line: #e4e0eb;
   --purple-deep: #4a3f5c;
   --purple-mid: #6e6280;
-  --purple-soft: #9a8fab;
+  --purple-soft: #a597ba;
   --purple-wash: #ebe7f2;
   --accent: #5b4a6f;
 }
@@ -364,6 +364,7 @@ main.landing-main {
   border-top: 1px solid var(--line);
   color: var(--ink-muted);
   font-size: 0.88rem;
+  align-items: center;
 }
 .landing-footer a {
   color: var(--purple-mid);

@@ -1,26 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!--Smart Campus — Campus life tools page. Class schedule organiser + room & facility finder (prototype UI).
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart campus tools</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SYNK- Smart campus tools</title>
+    <link rel="stylesheet" href="styleCampus.css">
+   
 </head>
-<body>
-    <header>
-        <nav>
-            <!--Add in icon here-->
-            <div class="nav-links"></div>
-            <ul>
-                <li><a href="Home.html">Home</a></li>
-                <li><a href="Campus.html">Campus</a></li>
-                <li><a href="Community.html">Community</a></li>
-                <li><a href="Health.html">Health</a></li>
-                <li><a href="Saftey.html">Saftey</a></li>
-                <li><a href="Profile.html">Profile</a></li>  <!--Consider tuening this into an icon instead of it saying profile-->
-            </ul>
-        </nav>
+
+<body class="landing">
+    <header class="landing-header">
+    <nav class="landing-nav" aria-label="Primary">
+
+    <!-- Logo -->
+    <a class="landing-brand" href="Home.html">SYNK</a>
+
+    <!-- Center Links -->
+    <ul class="landing-nav-links">
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Campus.html" class="active">Campus</a></li>
+        <li><a href="Community.html">Community</a></li>
+        <li><a href="Health.html">Health</a></li>
+        <li><a href="Security.html">Security</a></li>
+    </ul>
+
+    <!-- Right Side -->
+    <div class="landing-nav-actions">
+        <a class="btn btn-ghost" href="#login">Log in</a>
+        <a class="btn btn-primary" href="#register">Register</a>
+
+        <!-- Profile icon in corner -->
+        <a href="Profile.html" class="profile-link">
+            <span class="profile-icon">👤</span>
+        </a>
+    </div>
+
+</nav>
 </header>
+
+ <main class="campus-main">
+        <h1>Smart campus life</h1>
+        <p class="campus-lead">
+            Keep your week under control and find your way around campus—timetables, deadlines, and a calendar in one place, plus a facility finder for lecture halls, study spaces, toilets, and more.
+        </p>
+        <!-- Class schedule organiser: timetable, assignments, calendar -->
+        <section class="campus-section" aria-labelledby="schedule-heading">
+            <h2 id="schedule-heading">Class schedule organiser</h2>
+            <p>
+                View your weekly timetable, track assignment deadlines, and see key dates in a simple calendar. In a full app this would sync with your university system or import from a file.
+            </p>
+        <br>
+        
+            <h3>Weekly timetable</h3>
+
+            <div class="timetable-wrap">
+                <table class="timetable">
+                
+                    <thead>
+                        <tr>
+                            <th scope="col">Time</th>
+                            <th scope="col">Monday</th>
+                            <th scope="col">Tuesday</th>
+                            <th scope="col">Wednesday</th>
+                            <th scope="col">Thursday</th>
+                            <th scope="col">Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="slot-time">09:00–10:00</td>
+                            <td>Data structures — Lab 2B</td>
+                            <td>—</td>
+                            <td>Research methods — Hall A</td>
+                            <td>—</td>
+                            <td>Tutorial — Room 104</td>
+                        </tr>
+                        <tr>
+                            <td class="slot-time">10:00–11:00</td>
+                            <td>—</td>
+                            <td>Human–computer interaction — Studio 1</td>
+                            <td>—</td>
+                            <td>Software engineering — Hall A</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="slot-time">11:00–12:00</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="slot-time">14:00–15:00</td>
+                            <td>Project clinic — Study hub</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Careers session — Hall C</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br>
+
+            <h3>Assignment deadlines</h3>
+            <ul class="deadline-list">
+                <li><span class="deadline-date">2 Apr 2026</span> <span>Literature review (20%)</span></li>
+                <li><span class="deadline-date">14 Apr 2026</span> <span>Group presentation slides</span></li>
+                <li><span class="deadline-date">28 Apr 2026</span> <span>Final project report</span></li>
+            </ul>
+
+            <br>
+
+            <h3>Calendar</h3>
+            <p class="calendar-note">March 2026 — tap a date in the full app to add personal reminders.</p>
+            <div class="calendar-grid" aria-label="March 2026">
+                <span class="cal-dow">Mon</span>
+                <span class="cal-dow">Tue</span>
+                <span class="cal-dow">Wed</span>
+                <span class="cal-dow">Thu</span>
+                <span class="cal-dow">Fri</span>
+                <span class="cal-dow">Sat</span>
+                <span class="cal-dow">Sun</span>
+                <!-- 1 March 2026 = Sunday -->
+                <span class="cal-day muted"></span>
+                <span class="cal-day muted"></span>
+                <span class="cal-day muted"></span>
+                <span class="cal-day muted"></span>
+                <span class="cal-day muted"></span>
+                <span class="cal-day muted"></span>
+                <span class="cal-day">1</span>
+                <span class="cal-day">2</span>
+                <span class="cal-day">3</span>
+                <span class="cal-day">4</span>
+                <span class="cal-day">5</span>
+                <span class="cal-day">6</span>
+                <span class="cal-day">7</span>
+                <span class="cal-day">8</span>
+                <span class="cal-day">9</span>
+                <span class="cal-day highlight" title="Assignment due">10</span>
+                <span class="cal-day">11</span>
+                <span class="cal-day">12</span>
+                <span class="cal-day">13</span>
+                <span class="cal-day">14</span>
+                <span class="cal-day">15</span>
+                <span class="cal-day">16</span>
+                <span class="cal-day">17</span>
+                <span class="cal-day">18</span>
+                <span class="cal-day">19</span>
+                <span class="cal-day">20</span>
+                <span class="cal-day">21</span>
+                <span class="cal-day">22</span>
+                <span class="cal-day">23</span>
+                <span class="cal-day">24</span>
+                <span class="cal-day">25</span>
+                <span class="cal-day">26</span>
+                <span class="cal-day">27</span>
+                <span class="cal-day">28</span>
+                <span class="cal-day highlight" title="Spring term ends">28</span>
+            </div>
+        </section>
+        <!-- Room & facility finder -->
+        <section class="campus-section" aria-labelledby="finder-heading">
+            <h2 id="finder-heading">Room &amp; facility finder</h2>
+            <p>
+                Search for a building or room name, or browse by category. The full version could open maps, step-by-step directions, and accessibility details (e.g. step-free routes, accessible toilets).
+            </p>
+            <form class="facility-search" role="search" aria-label="Find rooms and facilities" onsubmit="return false;">
+                <label for="facility-q">Search campus</label>
+                <input type="search" id="facility-q" name="q" placeholder="e.g. Hall A, Library, accessible toilet" autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+            <div class="facility-grid">
+                <article class="facility-card">
+                    <h4>Lecture halls &amp; teaching rooms</h4>
+                    <ul>
+                        <li>Hall A — Main building, ground floor</li>
+                        <li>Hall B — Engineering wing</li>
+                        <li>Studio 1 — Design &amp; HCI</li>
+                        <li>Room 104 — Maths department</li>
+                    </ul>
+                </article>
+                <article class="facility-card">
+                    <h4>Study spaces</h4>
+                    <ul>
+                        <li>Central Library — silent floors 2–3</li>
+                        <li>Study hub — group work and project clinics</li>
+                        <li>24-hour computer suite — Library basement</li>
+                    </ul>
+                </article>
+                <article class="facility-card">
+                    <h4>Toilets &amp; changing</h4>
+                    <ul>
+                        <li>Accessible toilets — map pins on each floor</li>
+                        <li>Gender-neutral toilets — Main building &amp; Library</li>
+                        <li>Changing places — Sports centre</li>
+                    </ul>
+                </article>
+                <article class="facility-card">
+                    <h4>Food, drink &amp; welfare</h4>
+                    <ul>
+                        <li>Main refectory — hot meals and plant-based options</li>
+                        <li>Coffee bars — Library and atrium</li>
+                        <li>Student support — Student services, first floor</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
     
 </body>
 </html>

@@ -1,0 +1,189 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+.health-section {
+  background: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  width: 60%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.health-section button {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+textarea {
+  width: 80%;
+  height: 80px;
+  margin-top: 10px;
+}
+
+/* Page title */
+.page-title {
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+/* Card layout */
+.card {
+  background: #ffffff;
+  width: 60%;
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Button groups */
+.btn-group,
+.mood-group {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+/* Buttons */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #8e44ad; /* deep purple */
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #6f2d91;
+}
+
+/* Submit button */
+.submit-btn {
+  display: block;
+  margin: 10px auto;
+  background: #9b59b6;
+}
+
+.submit-btn:hover {
+  background: #7d3c98;
+}
+
+.output {
+  margin-top: 10px;
+  text-align: center;
+}
+
+textarea {
+  width: 90%;
+  height: 80px;
+  margin: 10px auto;
+  display: block;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.request-card {
+  background: #f1f2f6;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.request-card button {
+  background: #9b59b6; /* purple */
+  margin-top: 5px;
+}
+
+.request-card button:hover {
+  background: #7d3c98;
+}
+/* Highlight urgency */
+.normal {
+  color: #8e44ad; /* purple text */
+  font-weight: normal;
+}
+
+.high {
+  color: #d39be3; /* lighter purple for high urgency */
+  font-weight: bold;
+}
+
+/* Accepted card */
+.request-card {
+  background: #f1f2f6;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.request-card button {
+  background: #2ed573;
+  margin-top: 5px;
+}
+
+.request-card button:hover {
+  background: #1eae4f;
+}
+
+/* NAVIGATION */
+nav ul {
+  list-style: none; /* remove bullets */
+  display: flex; /* put links in a row */
+  justify-content: flex-end; /* push links to right */
+  margin: 0;
+  padding: 10px 20px;
+  background-color: #8e44ad; /* optional nav bg */
+}
+
+nav ul li {
+  margin-left: 20px; /* spacing between links */
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Campus Counselling Section */
+#uniContacts {
+  margin-top: 15px;
+  text-align: center;
+  font-style: italic;
+  color: #6a1b9a; /* purple shade to match theme */
+}
+
+input#uniName {
+  width: 90%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card {
+  text-align: center;
+}

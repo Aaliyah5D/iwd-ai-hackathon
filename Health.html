@@ -1,26 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saftey & Security</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health & Wellbeing</title>
+    <link rel="stylesheet" href="style1.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- HEADER -->
     <header>
-        <nav>
-            <!--Add in icon here-->
-            <div class="nav-links"></div>
-            <ul>
-                <li><a href="Home.html">Home</a></li>
-                <li><a href="Campus.html">Campus</a></li>
-                <li><a href="Community.html">Community</a></li>
-                <li><a href="Health.html">Health</a></li>
-                <li><a href="Saftey.html">Saftey</a></li>
-                <li><a href="Profile.html">Profile</a></li>  <!--Consider tuening this into an icon instead of it saying profile-->
-            </ul>
-        </nav>
-</header>
-    
-</body>
+      <nav>
+        <ul>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="Campus.html">Campus</a></li>
+          <li><a href="Community.html">Community</a></li>
+          <li><a href="Health.html">Health</a></li>
+          <li><a href="Safety.html">Safety</a></li>
+          <li><a href="Profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <h1 class="page-title">Health & Wellbeing</h1>
+
+      <!-- Request Help -->
+      <section class="health-section">
+        <h2>🩸 Request Help</h2>
+
+        <input type="text" id="username" placeholder="Your username" /><br />
+
+        <button onclick="requestHelp('Pad')">Request a Pad</button>
+        <button onclick="requestHelp('Pain Relief')">Pain Relief</button>
+        <button onclick="requestHelp('Asthma Pump')">Asthma Pump</button>
+
+        <!-- Single unique container for requests -->
+        <div id="requestOutput" class="output"></div>
+      </section>
+
+      <!-- Mental Health -->
+      <section class="health-section">
+        <h2>💬 Mental Health Check</h2>
+
+        <p>How are you feeling today?</p>
+
+        <button onclick="setMood('Happy')">😊</button>
+        <button onclick="setMood('Neutral')">😐</button>
+        <button onclick="setMood('Sad')">😞</button>
+        <button onclick="setMood('Angry')">😡</button>
+        <button onclick="setMood('Very Sad')">😢</button>
+
+        <br /><br />
+
+        <textarea id="moodNote" placeholder="Want to talk about it?"></textarea>
+
+        <button onclick="submitMood()">Submit</button>
+
+        <p id="moodOutput"></p>
+      </section>
+
+      <section class="card">
+        <h2>🏫 Campus Counselling Finder</h2>
+        <p>Enter your university to get campus counselling contacts:</p>
+
+        <input type="text" id="uniName" placeholder="Enter your university" />
+
+        <button onclick="findCounselling()">Find Contacts</button>
+
+        <div id="uniContacts" class="output"></div>
+      </section>
+    </main>
+
+    <!-- SCRIPT -->
+    <script>
+      // Load requests from localStorage
+      let requests = JSON.parse(localStorage.getItem("requests")) || [];
+
+      function requestHelp(item) {
+        const username =
+          document.getElementById("username").value || "Anonymous";
+        const urgency = prompt(
+          "Enter urgency level (Low, Medium, High):",
+          "Medium",
+        );
+
+        const request = {
+          id: Date.now(),
+          user: username,
+          type: item,
+          urgency: urgency || "Medium",
+          time: new Date().toLocaleString(),
+          status: "Pending",
+        };
+
+        requests.push(request);
+        localStorage.setItem("requests", JSON.stringify(requests));
+        displayRequests();
+      }
+
+      function acceptRequest(id) {
+        requests = requests.map((r) => {
+          if (r.id === id) r.status = "Accepted";
+          return r;
+        });
+        localStorage.setItem("requests", JSON.stringify(requests));
+        displayRequests();
+      }
+
+      function displayRequests() {
+        const output = document.getElementById("requestOutput");
+        output.innerHTML = "";
+
+        if (requests.length === 0) {
+          output.innerHTML = "<p>No requests yet</p>";
+          return;
+        }
+
+        requests.forEach((r) => {
+          const card = document.createElement("div");
+          card.className = "request-card";
+
+          // Card color based on status & urgency
+          if (r.status === "Accepted") {
+            card.style.backgroundColor = "#d4edda"; // green
+          } else if (r.urgency === "High") {
+            card.style.backgroundColor = "#f8d7da"; // red
+          } else if (r.urgency === "Medium") {
+            card.style.backgroundColor = "#fff3cd"; // yellow
+          } else {
+            card.style.backgroundColor = "#f1f2f6"; // default
+          }
+
+          card.innerHTML = `
+          <p><strong>${r.type}</strong> requested by <strong>${r.user}</strong></p>
+          <p>Time: ${r.time}</p>
+          <p>Urgency: <strong>${r.urgency}</strong></p>
+          <p>Status: <span class="status">${r.status}</span></p>
+          ${r.status === "Pending" ? `<button onclick="acceptRequest(${r.id})">Accept</button>` : ""}
+        `;
+
+          output.appendChild(card);
+        });
+      }
+
+      // Mental health
+      let mood = "";
+
+      function setMood(selectedMood) {
+        mood = selectedMood;
+      }
+
+      function submitMood() {
+        const moodData = {
+          mood: mood,
+          note: document.getElementById("moodNote").value,
+          time: new Date().toLocaleString(),
+        };
+        localStorage.setItem("mood", JSON.stringify(moodData));
+        document.getElementById("moodOutput").innerText = "Mood saved ✔️";
+      }
+
+      window.onload = displayRequests;
+    </script>
+  </body>
 </html>

@@ -1,26 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNK – Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <!--Add in icon here-->
-            <div class="nav-links"></div>
-            <ul>
-                <li><a href="Home.html">Home</a></li>
-                <li><a href="Campus.html">Campus</a></li>
-                <li><a href="Community.html">Community</a></li>
-                <li><a href="Health.html">Health</a></li>
-                <li><a href="Saftey.html">Saftey</a></li>
-                <li><a href="Profile.html">Profile</a></li>  <!--Consider tuening this into an icon instead of it saying profile-->
-            </ul>
-        </nav>
-</header>
-    
+<div class="app-wrap">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="logo">SY<span>NK</span></div>
+    <div class="top-right">
+      <div class="streak">🔥 12</div>
+      <div class="active-pill">● Active</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: SETTINGS
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-settings">
+    <h2 class="page-title">Settings</h2>
+    <p class="page-sub">Customise your SYNK experience.</p>
+
+    <p class="section-label">Your avatar</p>
+    <div class="avatar-grid">
+      <div class="av-opt selected" onclick="pickSettingsAvatar(this)">🦋</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🌸</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">⭐</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🌊</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🌻</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🐝</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🌙</div>
+      <div class="av-opt" onclick="pickSettingsAvatar(this)">🦩</div>
+    </div>
+
+    <p class="section-label" style="margin-top:20px;">Guardian settings</p>
+    <div class="card">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Guardian Mode</div>
+          <div class="toggle-sub">Receive ping requests today</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Bypass Do Not Disturb</div>
+          <div class="toggle-sub">Allow help pings at any time</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Show distance to requester</div>
+          <div class="toggle-sub">Only when you accept a request</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+    </div>
+
+    <p class="section-label">Appearance</p>
+    <div class="card">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Dark Mode</div>
+          <div class="toggle-sub">Switch app appearance</div>
+        </div>
+        <button class="toggle-switch off" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">High Contrast</div>
+          <div class="toggle-sub">Improve visibility</div>
+        </div>
+        <button class="toggle-switch off" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+    </div>
+
+    <p class="section-label">Account</p>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:14px;padding:6px 0;">
+        <div class="avatar" style="width:48px;height:48px;font-size:22px;" id="profile-avatar">🦋</div>
+        <div>
+          <div style="font-weight:900;font-size:15px;">Amara Dlamini</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:600;">amara@university.ac.za</div>
+        </div>
+        <div style="margin-left:auto;background:var(--y100);border:2px solid var(--y200);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:800;color:var(--y800);">Female · SA ID</div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <span class="pill">✓ First Aid</span>
+        <span class="pill mint">✓ SASL</span>
+        <span class="pill">✓ Disability Aid</span>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" style="width:100%;margin-bottom:20px;" onclick="window.location.href='Home.html'">Sign out</button>
+  </div><!-- /settings -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <a class="nav-item" href="Home.html">
+      <div class="nav-icon">🏠</div>Home
+    </a>
+    <a class="nav-item" href="Saftey.html" style="position:relative;">
+      <div class="nav-icon">📡</div>Request
+      <div class="notif-dot"></div>
+    </a>
+    <a class="nav-item" href="Campus.html">
+      <div class="nav-icon">🏆</div>Badges
+    </a>
+    <a class="nav-item" href="Community.html">
+      <div class="nav-icon">📖</div>Resources
+    </a>
+    <a class="nav-item active" href="profile.html">
+      <div class="nav-icon">⚙️</div>Settings
+    </a>
+  </nav>
+
+</div><!-- /app-wrap -->
+
+<script>
+  function pickSettingsAvatar(el) {
+    document.querySelectorAll('#page-settings .av-opt').forEach(a => a.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('profile-avatar').textContent = el.textContent;
+  }
+</script>
 </body>
 </html>

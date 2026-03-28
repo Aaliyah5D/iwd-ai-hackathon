@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profile",
+      "description": "Stores student profile information and skills.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "firstName": { "type": "string" },
+        "surname": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "university": { "type": "string" },
+        "studentNumber": { "type": "string" },
+        "gender": { "type": "string", "enum": ["Female", "Male", "Other"] },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "avatar": { "type": "string" },
+        "idNumber": { "type": "string" },
+        "emergencyContact": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "relationship": { "type": "string" },
+            "phone": { "type": "string" }
+          }
+        },
+        "universityLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "isGuardian": { "type": "boolean" },
+        "helpsCompleted": { "type": "integer" },
+        "achievements": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["uid", "firstName", "surname", "email", "displayName", "university", "gender"]
+    },
+    "helpRequests": {
+      "title": "Help Request",
+      "description": "Stores real-time help requests from students.",
+      "type": "object",
+      "properties": {
+        "requesterId": { "type": "string" },
+        "type": { "type": "string", "enum": ["pads", "medical-aid", "disability-aid", "safety-escort"] },
+        "isAnonymous": { "type": "boolean" },
+        "additionalInfo": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "accepted", "completed", "cancelled"] },
+        "acceptedBy": { "type": "string" },
+        "thankYouSent": { "type": "boolean" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["type", "isAnonymous", "location", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "User profile documents."
+    },
+    "/helpRequests/{requestId}": {
+      "schema": "helpRequests",
+      "description": "Help request documents."
+    }
+  }
+}

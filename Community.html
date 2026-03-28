@@ -1,26 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communit & Support</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNK – Community Resources</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <!--Add in icon here-->
-            <div class="nav-links"></div>
-            <ul>
-                <li><a href="Home.html">Home</a></li>
-                <li><a href="Campus.html">Campus</a></li>
-                <li><a href="Community.html">Community</a></li>
-                <li><a href="Health.html">Health</a></li>
-                <li><a href="Saftey.html">Saftey</a></li>
-                <li><a href="Profile.html">Profile</a></li>  <!--Consider tuening this into an icon instead of it saying profile-->
-            </ul>
-        </nav>
-</header>
-    
+<div class="app-wrap">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="logo">SY<span>NK</span></div>
+    <div class="top-right">
+      <div class="streak">🔥 12</div>
+      <div class="active-pill">● Active</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: RESOURCES
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-resources">
+    <h2 class="page-title">Resources</h2>
+    <p class="page-sub">Help for every situation. You are not alone.</p>
+
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="res-pill active" onclick="filterRes(this)">💜 Mental Health</button>
+      <button class="res-pill"        onclick="filterRes(this)">🛡️ Safety &amp; DV</button>
+      <button class="res-pill"        onclick="filterRes(this)">🌺 Sexual Health</button>
+      <button class="res-pill"        onclick="filterRes(this)">🎓 Academic</button>
+      <button class="res-pill"        onclick="filterRes(this)">💰 Financial</button>
+    </div>
+
+    <div class="card">
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--lav);">🧠</div>
+        <div>
+          <h4>SADAG Helpline</h4>
+          <p>0800 456 789 · Free, 24/7 · Depression &amp; anxiety</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--y100);">🏛️</div>
+        <div>
+          <h4>Campus Counselling</h4>
+          <p>Free sessions for registered students</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--peach);">📞</div>
+        <div>
+          <h4>Lifeline South Africa</h4>
+          <p>0861 322 322 · Crisis support, 24/7</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--mint);">💚</div>
+        <div>
+          <h4>SANCA Alcohol &amp; Drugs</h4>
+          <p>0861 4SANCA · Confidential support</p>
+        </div>
+        <span>›</span>
+      </div>
+    </div>
+
+    <p class="section-label">Safety &amp; Gender-Based Violence</p>
+    <div class="card">
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--coral);">🚨</div>
+        <div>
+          <h4>GBV Command Centre</h4>
+          <p>0800 428 428 · Free, 24/7 · SMS *120*7867#</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--lav);">🏠</div>
+        <div>
+          <h4>Rape Crisis Cape Town</h4>
+          <p>021 447 9762 · Support &amp; counselling</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--mint);">🛡️</div>
+        <div>
+          <h4>Campus Security</h4>
+          <p>Dial 10111 on campus · Emergency response</p>
+        </div>
+        <span>›</span>
+      </div>
+    </div>
+
+    <p class="section-label">Academic &amp; Financial</p>
+    <div class="card">
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--y100);">🎓</div>
+        <div>
+          <h4>NSFAS</h4>
+          <p>0800 067 327 · Financial aid support</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--peach);">📚</div>
+        <div>
+          <h4>Student Academic Support</h4>
+          <p>Tutoring, writing &amp; study skills</p>
+        </div>
+        <span>›</span>
+      </div>
+    </div>
+
+  </div><!-- /resources -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <a class="nav-item" href="Home.html">
+      <div class="nav-icon">🏠</div>Home
+    </a>
+    <a class="nav-item" href="Saftey.html" style="position:relative;">
+      <div class="nav-icon">📡</div>Request
+      <div class="notif-dot"></div>
+    </a>
+    <a class="nav-item" href="Campus.html">
+      <div class="nav-icon">🏆</div>Badges
+    </a>
+    <a class="nav-item active" href="Community.html">
+      <div class="nav-icon">📖</div>Resources
+    </a>
+    <a class="nav-item" href="profile.html">
+      <div class="nav-icon">⚙️</div>Settings
+    </a>
+  </nav>
+
+</div><!-- /app-wrap -->
+
+<script>
+  function filterRes(el) {
+    document.querySelectorAll('.res-pill').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
 </body>
 </html>

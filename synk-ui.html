@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNK – Campus Safety App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --y50:  #FFFDF0;
+      --y100: #FFF8CC;
+      --y200: #FFEE88;
+      --y300: #FFE44D;
+      --y400: #F5D300;
+      --y600: #C9A800;
+      --y800: #7A6500;
+      --y900: #3D3200;
+
+      --mint:        #C3F0E0;
+      --mint-border: #7DE6BA;
+      --mint-text:   #0D7A53;
+      --peach:       #FFD9C8;
+      --peach-dark:  #C05A30;
+      --lav:         #EDE9FB;
+      --lav-border:  #C4BAEE;
+      --lav-text:    #5A52A8;
+      --coral:       #FFE5E5;
+      --coral-text:  #C0392B;
+
+      --white:  #FFFFFF;
+      --bg:     #FFFCEB;
+      --text:   #2C2000;
+      --muted:  #8A7A30;
+      --border: #F0E080;
+
+      --radius:    18px;
+      --radius-sm: 10px;
+      --shadow:    0 4px 0 0 rgba(197,168,0,0.25);
+      --shadow-sm: 0 3px 0 0 rgba(197,168,0,0.20);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #FFF8CC;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ─── SHELL ──────────────────────────────────────────── */
+    .app-wrap {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg);
+      min-height: 100vh;
+      position: relative;
+      padding-bottom: 84px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.10);
+    }
+
+    /* ─── TOP BAR ─────────────────────────────────────────── */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px 10px;
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 2px solid var(--border);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--y800);
+      letter-spacing: -1px;
+    }
+    .logo span { color: var(--y600); }
+    .top-right { display: flex; align-items: center; gap: 8px; }
+    .streak {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--y100);
+      border: 2px solid var(--y200);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 13px; font-weight: 800; color: var(--y800);
+    }
+    .active-pill {
+      background: var(--mint); border: 2px solid var(--mint-border);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 11px; font-weight: 800; color: var(--mint-text);
+    }
+
+    /* ─── BOTTOM NAV ─────────────────────────────────────── */
+    .bottom-nav {
+      position: fixed; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 420px;
+      background: var(--white);
+      border-top: 2.5px solid var(--border);
+      display: flex; justify-content: space-around;
+      padding: 10px 0 16px;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px; font-size: 10px; font-weight: 800;
+      color: var(--muted); cursor: pointer;
+      padding: 3px 10px; border-radius: var(--radius-sm);
+      border: none; background: none; font-family: 'Nunito', sans-serif;
+      transition: color 0.15s; position: relative;
+    }
+    .nav-item.active { color: var(--y800); }
+    .nav-item.active .nav-icon { background: var(--y100); }
+    .nav-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; transition: background 0.15s;
+    }
+    .notif-dot {
+      position: absolute; top: 4px; right: 8px;
+      width: 9px; height: 9px; background: #FF5252;
+      border-radius: 50%; border: 2px solid var(--white);
+    }
+
+    /* ─── PAGES ──────────────────────────────────────────── */
+    .page { display: none; padding: 20px 20px 0; animation: fadeIn 0.15s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────── */
+    .page-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+    .page-sub   { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 18px; }
+    .section-label {
+      font-size: 10px; font-weight: 900; color: var(--muted);
+      letter-spacing: 1px; text-transform: uppercase; margin: 16px 0 8px;
+    }
+
+    /* ─── CARD ───────────────────────────────────────────── */
+    .card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 18px; border: 2.5px solid var(--border);
+      box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .card-y  { border-color: var(--y300); }
+    .card-g  { border-color: var(--mint-border); }
+    .card-l  { border-color: var(--lav-border); }
+
+    /* ─── HELP GRID ──────────────────────────────────────── */
+    .help-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .help-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 2.5px solid var(--border); box-shadow: var(--shadow);
+      padding: 18px 14px; cursor: pointer; text-align: center;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .help-card:active { transform: scale(0.97); box-shadow: 0 1px 0 0 rgba(197,168,0,0.15); }
+    .help-card:hover  { border-color: var(--y300); }
+    .help-card.selected { border-color: var(--y400); background: var(--y50); }
+    .hc-icon {
+      width: 54px; height: 54px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 10px;
+    }
+    .hc-y    { background: var(--y100); }
+    .hc-mint { background: #E8FBF3; }
+    .hc-peach{ background: #FFF1EB; }
+    .hc-lav  { background: var(--lav); }
+    .help-card h3 { font-size: 13px; font-weight: 800; color: var(--text); }
+    .help-card p  { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 600; }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      width: 100%; border: none; border-radius: var(--radius);
+      padding: 16px; font-size: 16px; font-weight: 900;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s; display: block;
+      text-align: center; text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--y400); color: var(--y900);
+      box-shadow: 0 5px 0 0 var(--y600);
+    }
+    .btn-primary:active { transform: translateY(4px); box-shadow: 0 1px 0 0 var(--y600); }
+    .btn-secondary {
+      background: var(--white); color: var(--y800);
+      border: 2.5px solid var(--y300); margin-top: 10px;
+      box-shadow: 0 4px 0 0 var(--y200);
+    }
+    .btn-secondary:active { transform: translateY(3px); box-shadow: 0 1px 0 0 var(--y200); }
+    .btn-danger {
+      background: var(--coral); color: var(--coral-text);
+      border: 2.5px solid #FFBDBD; margin-top: 10px;
+      box-shadow: 0 4px 0 0 #FFBDBD;
+    }
+    .btn-sm {
+      padding: 12px 8px; font-size: 13px;
+    }
+
+    /* ─── AVATAR ─────────────────────────────────────────── */
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--y100); border: 3px solid var(--y300);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .avatar-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 10px 0; }
+    .av-opt {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 3px solid var(--border); background: var(--y50);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; cursor: pointer;
+      transition: border-color 0.12s, transform 0.12s;
+    }
+    .av-opt.selected { border-color: var(--y400); transform: scale(1.10); }
+
+    /* ─── RADAR ──────────────────────────────────────────── */
+    .radar-wrap { display: flex; flex-direction: column; align-items: center; padding: 24px 0 12px; }
+    .radar { position: relative; width: 190px; height: 190px; }
+    .radar-ring {
+      position: absolute; border-radius: 50%;
+      border: 2px solid var(--y300); top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: radarPulse 2.8s ease-out infinite;
+    }
+    .r1 { width: 190px; height: 190px; animation-delay: 0s; }
+    .r2 { width: 134px; height: 134px; animation-delay: 0.6s; }
+    .r3 { width: 78px;  height: 78px;  animation-delay: 1.2s; }
+    @keyframes radarPulse {
+      0%   { opacity: 0.7; border-color: var(--y400); }
+      100% { opacity: 0;   border-color: var(--y100); }
+    }
+    .radar-center {
+      position: absolute; width: 44px; height: 44px;
+      background: var(--y400); border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; z-index: 2;
+      animation: centerBlink 1.4s ease-in-out infinite;
+    }
+    @keyframes centerBlink {
+      0%,100% { box-shadow: 0 0 0 6px rgba(245,211,0,0.25); }
+      50%      { box-shadow: 0 0 0 14px rgba(245,211,0,0.08); }
+    }
+    .radar-dot {
+      position: absolute; width: 14px; height: 14px;
+      background: #FF5252; border-radius: 50%;
+      border: 2.5px solid white;
+      animation: dotBlink 1.6s ease-in-out infinite;
+    }
+    .rd1 { top: 28px;  left: 82px;  animation-delay: 0.2s; }
+    .rd2 { top: 102px; left: 128px; animation-delay: 0.8s; }
+    .rd3 { top: 116px; left: 44px;  animation-delay: 1.3s; }
+    @keyframes dotBlink {
+      0%,100% { opacity: 1; transform: scale(1);   }
+      50%      { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* ─── BADGE ──────────────────────────────────────────── */
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .badge {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--y50); border-radius: var(--radius-sm);
+      padding: 10px 14px; border: 2px solid var(--y200);
+      min-width: 72px; font-size: 11px; font-weight: 800;
+      color: var(--y800); gap: 4px;
+    }
+    .badge .bicon { font-size: 26px; }
+    .badge.locked { opacity: 0.38; filter: grayscale(1); }
+
+    /* ─── PROGRESS ───────────────────────────────────────── */
+    .progress-track {
+      background: var(--y100); border-radius: 20px;
+      height: 14px; width: 100%; overflow: hidden;
+      border: 2px solid var(--y200);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--y300), var(--y400));
+      border-radius: 20px; transition: width 0.4s;
+    }
+
+    /* ─── TOGGLE ─────────────────────────────────────────── */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 0; border-bottom: 1.5px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-label { font-size: 14px; font-weight: 800; color: var(--text); }
+    .toggle-sub   { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+    .toggle-switch {
+      width: 48px; height: 27px; background: var(--y400);
+      border-radius: 20px; position: relative; cursor: pointer;
+      border: none; flex-shrink: 0; transition: background 0.2s;
+    }
+    .toggle-switch.off { background: var(--border); }
+    .toggle-knob {
+      position: absolute; width: 21px; height: 21px;
+      background: white; border-radius: 50%;
+      top: 3px; left: 24px; transition: left 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    }
+    .toggle-switch.off .toggle-knob { left: 3px; }
+
+    /* ─── RESOURCE PILLS ─────────────────────────────────── */
+    .res-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--white); border: 2px solid var(--border);
+      border-radius: 30px; padding: 7px 14px; font-size: 12px;
+      font-weight: 800; color: var(--y800); margin: 4px; cursor: pointer;
+      transition: all 0.12s; box-shadow: 0 2px 0 0 var(--border);
+      font-family: 'Nunito', sans-serif;
+    }
+    .res-pill.active, .res-pill:hover {
+      background: var(--y100); border-color: var(--y300);
+      box-shadow: 0 2px 0 0 var(--y300);
+    }
+    .res-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1.5px solid var(--border); cursor: pointer;
+    }
+    .res-link:last-child { border-bottom: none; }
+    .res-icon {
+      width: 40px; height: 40px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .res-link h4  { font-size: 13px; font-weight: 800; color: var(--text); }
+    .res-link p   { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .res-link span { margin-left: auto; color: var(--muted); font-size: 16px; font-weight: 700; }
+
+    /* ─── INPUT ──────────────────────────────────────────── */
+    .input-field {
+      width: 100%; border: 2.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: 13px 14px;
+      font-size: 14px; font-family: 'Nunito', sans-serif;
+      color: var(--text); background: var(--white);
+      margin-bottom: 10px; outline: none; transition: border-color 0.15s;
+    }
+    .input-field:focus { border-color: var(--y400); }
+    .input-field::placeholder { color: var(--muted); }
+    select.input-field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7A30' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; cursor: pointer; }
+
+    /* ─── ANON STRIP ─────────────────────────────────────── */
+    .anon-strip {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--lav); border-radius: var(--radius-sm);
+      padding: 13px 14px; margin-bottom: 14px;
+      border: 2px solid var(--lav-border);
+    }
+    .anon-strip .label { font-size: 13px; font-weight: 800; color: var(--lav-text); }
+    .anon-strip .sub   { font-size: 11px; color: var(--lav-text); opacity: 0.75; font-weight: 600; margin-top: 2px; }
+
+    /* ─── TIP CARD ROWS ──────────────────────────────────── */
+    .tip-row {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 10px 0; border-bottom: 1.5px solid var(--border);
+    }
+    .tip-row:last-child { border-bottom: none; }
+    .tip-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .tip-text { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.5; }
+
+    /* ─── PILL TAGS ──────────────────────────────────────── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--y100); color: var(--y800);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 12px; font-weight: 800;
+      border: 1.5px solid var(--y200); margin: 3px;
+    }
+    .pill.mint { background: #EAFBF3; color: var(--mint-text); border-color: var(--mint-border); }
+
+    /* ─── NOTIF BANNER ───────────────────────────────────── */
+    .notif-banner {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--y100); border: 2px solid var(--y300);
+      border-radius: var(--radius-sm); padding: 13px 14px;
+      margin-bottom: 14px;
+    }
+    .notif-banner .nb-icon { font-size: 26px; }
+    .notif-banner .nb-title { font-size: 14px; font-weight: 800; color: var(--y800); }
+    .notif-banner .nb-sub   { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+    /* ─── DIVIDER ────────────────────────────────────────── */
+    .divider { height: 1.5px; background: var(--border); margin: 4px 0 16px; }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--y200); border-radius: 4px; }
+
+    /* ─── AUTH SCREENS ───────────────────────────────────── */
+    .auth-screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      padding: 0;
+    }
+    .auth-screen.active { display: flex; }
+
+    .auth-hero {
+      background: var(--y400);
+      padding: 52px 32px 36px;
+      text-align: center;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      box-shadow: 0 6px 0 0 var(--y600);
+    }
+    .auth-logo {
+      font-size: 42px; font-weight: 900;
+      color: var(--y900); letter-spacing: -2px; margin-bottom: 6px;
+    }
+    .auth-logo span { color: var(--white); }
+    .auth-tagline { font-size: 14px; font-weight: 700; color: var(--y800); }
+
+    .auth-body { padding: 28px 24px; flex: 1; }
+    .auth-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+    .auth-sub   { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 22px; }
+
+    .input-label {
+      font-size: 11px; font-weight: 900; color: var(--muted);
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin-bottom: 5px; display: block;
+    }
+    .input-group { margin-bottom: 14px; }
+
+    .step-dots {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 22px;
+    }
+    .step-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--y200); transition: background 0.2s, width 0.2s;
+    }
+    .step-dot.active { background: var(--y400); width: 28px; border-radius: 5px; }
+    .step-dot.done   { background: var(--y600); }
+
+    .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .skill-toggle {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 13px; border: 2.5px solid var(--border);
+      border-radius: var(--radius-sm); cursor: pointer;
+      transition: all 0.12s; background: var(--white);
+      font-size: 13px; font-weight: 700; color: var(--text);
+    }
+    .skill-toggle.on { border-color: var(--y400); background: var(--y50); color: var(--y800); }
+    .skill-toggle .sk-icon { font-size: 18px; }
+
+    .auth-link {
+      text-align: center; font-size: 13px; font-weight: 700;
+      color: var(--muted); margin-top: 16px; margin-bottom: 8px;
+    }
+    .auth-link a { color: var(--y800); cursor: pointer; text-decoration: underline; }
+
+    .id-verified {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--mint); border: 2px solid var(--mint-border);
+      border-radius: var(--radius-sm); padding: 10px 13px;
+      font-size: 13px; font-weight: 800; color: var(--mint-text);
+      margin-top: -4px; margin-bottom: 14px;
+    }
+    .id-error {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--coral); border: 2px solid #FFBDBD;
+      border-radius: var(--radius-sm); padding: 10px 13px;
+      font-size: 13px; font-weight: 800; color: var(--coral-text);
+      margin-top: -4px; margin-bottom: 14px; display: none;
+    }
+
+    /* hide bottom nav + top bar on auth */
+    .auth-active .bottom-nav,
+    .auth-active .top-bar { display: none; }
+    .auth-active .app-inner { display: none; }
+
+    .app-inner { display: block; }
+  </style>
+</head>
+<body>
+<div class="app-wrap" id="app-wrap">
+
+  <!-- ════════════════════════════════════════════════
+       AUTH: SPLASH
+  ════════════════════════════════════════════════ -->
+  <div class="auth-screen active" id="auth-splash" style="background:var(--y400);align-items:center;justify-content:center;flex-direction:column;gap:0;">
+    <div style="text-align:center;padding:0 32px;">
+      <div style="font-size:72px;margin-bottom:12px;">🛡️</div>
+      <div style="font-size:52px;font-weight:900;color:var(--y900);letter-spacing:-2px;margin-bottom:8px;">SY<span style="color:var(--white);">NK</span></div>
+      <div style="font-size:16px;font-weight:700;color:var(--y800);margin-bottom:48px;line-height:1.5;">Campus safety, powered<br>by the people around you.</div>
+      <button class="btn btn-primary" style="background:var(--y900);color:var(--y300);box-shadow:0 5px 0 0 #1a1600;font-size:17px;" onclick="showAuth('signup-1')">Get started</button>
+      <button class="btn" style="background:transparent;color:var(--y900);border:2.5px solid var(--y800);margin-top:12px;box-shadow:none;font-size:15px;" onclick="showAuth('login')">I already have an account</button>
+    </div>
+    <div style="position:absolute;bottom:32px;font-size:12px;font-weight:700;color:var(--y800);">For students. By students. 🤝</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       AUTH: LOGIN
+  ════════════════════════════════════════════════ -->
+  <div class="auth-screen" id="auth-login">
+    <div class="auth-hero">
+      <div class="auth-logo">SY<span>NK</span></div>
+      <div class="auth-tagline">Welcome back 👋</div>
+    </div>
+    <div class="auth-body">
+      <div class="auth-title">Log in to SYNK</div>
+      <div class="auth-sub">Use your university email to sign in.</div>
+
+      <div class="input-group">
+        <label class="input-label">University Email</label>
+        <input class="input-field" type="email" placeholder="yourname@university.ac.za" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <input class="input-field" type="password" placeholder="••••••••" />
+      </div>
+
+      <div style="text-align:right;margin-top:-6px;margin-bottom:18px;">
+        <a style="font-size:12px;font-weight:800;color:var(--y800);cursor:pointer;">Forgot password?</a>
+      </div>
+
+      <button class="btn btn-primary" onclick="enterApp()">Log in →</button>
+      <button class="btn btn-secondary" onclick="showAuth('splash')">← Back</button>
+
+      <div class="auth-link">Don't have an account? <a onclick="showAuth('signup-1')">Sign up</a></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       AUTH: SIGNUP STEP 1 — Personal details
+  ════════════════════════════════════════════════ -->
+  <div class="auth-screen" id="auth-signup-1">
+    <div class="auth-hero">
+      <div class="auth-logo">SY<span>NK</span></div>
+      <div class="auth-tagline">Create your account</div>
+    </div>
+    <div class="auth-body">
+      <div class="step-dots">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+      </div>
+      <div class="auth-title">Tell us about yourself</div>
+      <div class="auth-sub">Step 1 of 3 — Personal details</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="input-group">
+          <label class="input-label">First Name</label>
+          <input class="input-field" type="text" placeholder="Amara" style="margin-bottom:0;" />
+        </div>
+        <div class="input-group">
+          <label class="input-label">Surname</label>
+          <input class="input-field" type="text" placeholder="Dlamini" style="margin-bottom:0;" />
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-top:4px;">
+        <label class="input-label">University Email</label>
+        <input class="input-field" type="email" placeholder="yourname@university.ac.za" />
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">South African ID Number</label>
+        <input class="input-field" type="text" id="id-input" maxlength="13" placeholder="13-digit SA ID number" oninput="validateID(this.value)" />
+      </div>
+      <div class="id-verified" id="id-ok">✅ Valid ID — Gender detected: Female</div>
+      <div class="id-error"    id="id-err">❌ Invalid ID number — please check</div>
+
+      <div class="input-group">
+        <label class="input-label">University</label>
+        <select class="input-field">
+          <option value="">Select your university…</option>
+          <option>University of Cape Town (UCT)</option>
+          <option>University of the Witwatersrand (Wits)</option>
+          <option>University of Pretoria (UP)</option>
+          <option>Stellenbosch University (SU)</option>
+          <option>University of KwaZulu-Natal (UKZN)</option>
+          <option>Rhodes University</option>
+          <option>University of Johannesburg (UJ)</option>
+          <option>CPUT</option>
+          <option>DUT</option>
+          <option>Other approved institution</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" onclick="showAuth('signup-2')">Continue →</button>
+      <button class="btn btn-secondary" onclick="showAuth('splash')">← Back</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       AUTH: SIGNUP STEP 2 — Skills
+  ════════════════════════════════════════════════ -->
+  <div class="auth-screen" id="auth-signup-2">
+    <div class="auth-hero" style="padding:36px 32px 28px;">
+      <div class="auth-logo">SY<span>NK</span></div>
+      <div class="auth-tagline">Your guardian skills</div>
+    </div>
+    <div class="auth-body">
+      <div class="step-dots">
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+      </div>
+      <div class="auth-title">What skills do you have?</div>
+      <div class="auth-sub">Step 2 of 3 — Select all that apply. You can update this later.</div>
+
+      <div class="skill-grid">
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">🩺</span> First Aid</div>
+        <div class="skill-toggle on" onclick="toggleSkill(this)"><span class="sk-icon">🤟</span> SASL</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">♿</span> Disability Aid</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">🧠</span> Mental Health</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">💊</span> Med Admin</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">🚑</span> CPR Trained</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">🗣️</span> Peer Support</div>
+        <div class="skill-toggle" onclick="toggleSkill(this)"><span class="sk-icon">🌍</span> Multilingual</div>
+      </div>
+
+      <div style="background:var(--y50);border:2px solid var(--y200);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:16px;font-size:12px;font-weight:700;color:var(--y800);">
+        💡 No skills yet? That's okay — you can still request and receive help.
+      </div>
+
+      <button class="btn btn-primary" onclick="showAuth('signup-3')">Continue →</button>
+      <button class="btn btn-secondary" onclick="showAuth('signup-1')">← Back</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       AUTH: SIGNUP STEP 3 — Username & avatar
+  ════════════════════════════════════════════════ -->
+  <div class="auth-screen" id="auth-signup-3">
+    <div class="auth-hero" style="padding:36px 32px 28px;">
+      <div class="auth-logo">SY<span>NK</span></div>
+      <div class="auth-tagline">Almost there!</div>
+    </div>
+    <div class="auth-body">
+      <div class="step-dots">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+      </div>
+      <div class="auth-title">Pick your identity</div>
+      <div class="auth-sub">Step 3 of 3 — Choose a display name and avatar.</div>
+
+      <div class="input-group">
+        <label class="input-label">Display Name (shown to others)</label>
+        <input class="input-field" type="text" placeholder="e.g. butterfly_amara" />
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <input class="input-field" type="password" placeholder="At least 8 characters" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Confirm Password</label>
+        <input class="input-field" type="password" placeholder="Repeat password" />
+      </div>
+
+      <label class="input-label" style="margin-bottom:8px;">Choose your avatar</label>
+      <div class="avatar-grid" id="signup-av-grid" style="margin-bottom:16px;">
+        <div class="av-opt selected" onclick="pickAvatar(this)">🦋</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🌸</div>
+        <div class="av-opt" onclick="pickAvatar(this)">⭐</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🌊</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🌻</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🐝</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🌙</div>
+        <div class="av-opt" onclick="pickAvatar(this)">🦩</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="enterApp()" style="font-size:17px;">🎉 Create my account</button>
+      <button class="btn btn-secondary" onclick="showAuth('signup-2')">← Back</button>
+    </div>
+  </div>
+
+  <!-- ── app inner (hidden until logged in) ── -->
+  <div class="app-inner" id="app-inner" style="display:none;">
+
+  <!-- ── TOP BAR ── -->
+  <div class="top-bar">
+    <div class="logo">SY<span>NK</span></div>
+    <div class="top-right">
+      <div class="streak">🔥 12</div>
+      <div class="active-pill">● Active</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: HOME
+  ════════════════════════════════════════════════ -->
+  <div class="page active" id="page-home">
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <div class="avatar">🦋</div>
+      <div>
+        <div style="font-size:16px;font-weight:900;color:var(--text);">Hey, Amara 👋</div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;">Guardian on duty today</div>
+      </div>
+    </div>
+
+    <p class="section-label">Request help</p>
+    <div class="help-grid">
+      <div class="help-card" onclick="switchPage('request')">
+        <div class="hc-icon hc-mint">🩸</div>
+        <h3>Pads & Tampons</h3>
+        <p>Period supplies</p>
+      </div>
+      <div class="help-card" onclick="switchPage('request')">
+        <div class="hc-icon hc-y">💊</div>
+        <h3>Medical Aid</h3>
+        <p>Meds & first aid</p>
+      </div>
+      <div class="help-card" onclick="switchPage('request')">
+        <div class="hc-icon hc-peach">♿</div>
+        <h3>Disability Aid</h3>
+        <p>Access & navigation</p>
+      </div>
+      <div class="help-card" onclick="switchPage('request')">
+        <div class="hc-icon hc-lav">🤝</div>
+        <h3>Safety Walk</h3>
+        <p>Companion escort</p>
+      </div>
+    </div>
+
+    <div class="card card-y" style="display:flex;align-items:center;gap:14px;">
+      <div style="background:var(--y100);width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📡</div>
+      <div>
+        <div style="font-weight:900;font-size:15px;">2 guardians nearby</div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;">Within 80m of you right now</div>
+      </div>
+    </div>
+
+    <p class="section-label">Quick actions</p>
+    <button class="btn btn-primary" onclick="switchPage('request')">🆘 Request Help Now</button>
+
+  </div><!-- /home -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: REQUEST
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-request">
+    <h2 class="page-title">Request Help</h2>
+    <p class="page-sub">Choose what you need — we'll find someone nearby.</p>
+
+    <!-- Anon toggle -->
+    <div class="anon-strip">
+      <span style="font-size:24px;">🎭</span>
+      <div>
+        <div class="label">Request anonymously</div>
+        <div class="sub">Your name won't be shown to the guardian</div>
+      </div>
+      <div style="margin-left:auto;">
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+    </div>
+
+    <p class="section-label">What do you need?</p>
+    <div class="help-grid" style="margin-bottom:14px;" id="req-grid">
+      <div class="help-card" onclick="selectHelp(this)">
+        <div class="hc-icon hc-mint">🩸</div>
+        <h3>Pads & Tampons</h3>
+      </div>
+      <div class="help-card" onclick="selectHelp(this)">
+        <div class="hc-icon hc-y">💊</div>
+        <h3>Medical Aid</h3>
+      </div>
+      <div class="help-card" onclick="selectHelp(this)">
+        <div class="hc-icon hc-peach">♿</div>
+        <h3>Disability Aid</h3>
+      </div>
+      <div class="help-card" onclick="selectHelp(this)">
+        <div class="hc-icon hc-lav">🤝</div>
+        <h3>Safety Walk</h3>
+      </div>
+    </div>
+
+    <textarea class="input-field" rows="3" placeholder="Any extra details? (optional)" style="resize:none;"></textarea>
+
+    <button class="btn btn-primary" onclick="switchPage('radar')">📡 Ping Guardians Nearby</button>
+    <button class="btn btn-secondary" onclick="switchPage('home')">Cancel</button>
+  </div><!-- /request -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: RADAR
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-radar">
+    <h2 class="page-title" style="text-align:center;">Finding Guardians</h2>
+    <p class="page-sub" style="text-align:center;">Scanning 100m radius around you</p>
+
+    <div class="radar-wrap">
+      <div class="radar">
+        <div class="radar-ring r1"></div>
+        <div class="radar-ring r2"></div>
+        <div class="radar-ring r3"></div>
+        <div class="radar-center">📍</div>
+        <div class="radar-dot rd1"></div>
+        <div class="radar-dot rd2"></div>
+        <div class="radar-dot rd3"></div>
+      </div>
+      <div style="margin-top:16px;font-size:15px;font-weight:900;color:var(--y800);">3 guardians pinged</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px;">Waiting for a response…</div>
+    </div>
+
+    <div class="card card-g" style="margin-top:4px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="avatar" style="width:42px;height:42px;font-size:20px;">🌸</div>
+        <div>
+          <div style="font-weight:900;font-size:14px;">A guardian is responding</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:600;">Approx. 45m away · First Aid skill</div>
+        </div>
+        <div style="margin-left:auto;background:var(--mint);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:800;color:var(--mint-text);">✓ First Aid</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+      <button class="btn btn-primary btn-sm" onclick="switchPage('guardian-tips')">✓ I can help</button>
+      <button class="btn btn-secondary btn-sm" style="margin:0;">✕ I can't now</button>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="switchPage('home')" style="width:100%;margin-top:10px;">Cancel request</button>
+  </div><!-- /radar -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: GUARDIAN TIPS
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-guardian-tips">
+
+    <div class="notif-banner" style="margin-bottom:18px;">
+      <div class="nb-icon">✨</div>
+      <div>
+        <div class="nb-title">AI Guardian Tips</div>
+        <div class="nb-sub">Someone needs period supplies nearby</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tip-row">
+        <div class="tip-icon" style="background:var(--mint);">🛡️</div>
+        <div class="tip-text">Lead with kindness, not pity. A simple "I've got you" goes a long way.</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon" style="background:var(--lav);">🤫</div>
+        <div class="tip-text">Be discreet. Hand it over quietly — no announcement needed.</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon" style="background:var(--peach);">💛</div>
+        <div class="tip-text">Ask if they need anything else — water, a break, or company.</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon" style="background:var(--y100);">😊</div>
+        <div class="tip-text">Keep it normal. This is just two people looking out for each other.</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon" style="background:var(--coral);">🚨</div>
+        <div class="tip-text">If they seem unwell, don't leave — call campus health if unsure.</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" onclick="switchPage('achievements')">✓✓ Mark help as complete</button>
+    <button class="btn btn-secondary" onclick="switchPage('home')">Back to home</button>
+  </div><!-- /guardian-tips -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: ACHIEVEMENTS
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-achievements">
+    <h2 class="page-title">Achievements</h2>
+    <p class="page-sub">Making campus safer, one help at a time.</p>
+
+    <div class="card card-y" style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+      <div class="avatar" style="width:58px;height:58px;font-size:28px;border-color:var(--y400);">🦋</div>
+      <div style="flex:1;">
+        <div style="font-weight:900;font-size:17px;">Amara Dlamini</div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px;">12 successful helps</div>
+        <div class="progress-track"><div class="progress-fill" style="width:60%;"></div></div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:5px;">8 more to earn Silver Shield 🛡️</div>
+      </div>
+    </div>
+
+    <!-- Unlock notification -->
+    <div class="notif-banner">
+      <div class="nb-icon">🔔</div>
+      <div>
+        <div class="nb-title">New badge unlocked!</div>
+        <div class="nb-sub">You earned "Period Pal" 🌸 — tap to celebrate</div>
+      </div>
+    </div>
+
+    <p class="section-label">Your badges</p>
+    <div class="badge-row">
+      <div class="badge"><span class="bicon">🥉</span><span>First Help</span></div>
+      <div class="badge"><span class="bicon">💊</span><span>Medic</span></div>
+      <div class="badge"><span class="bicon">🌸</span><span>Period Pal</span></div>
+      <div class="badge locked"><span class="bicon">🛡️</span><span>Silver</span></div>
+      <div class="badge locked"><span class="bicon">🌟</span><span>Star Guard</span></div>
+      <div class="badge locked"><span class="bicon">♿</span><span>Access Hero</span></div>
+      <div class="badge locked"><span class="bicon">🏆</span><span>Gold</span></div>
+      <div class="badge locked"><span class="bicon">💫</span><span>Legend</span></div>
+    </div>
+
+    <p class="section-label" style="margin-top:20px;">Your skills</p>
+    <div>
+      <span class="pill">✓ First Aid</span>
+      <span class="pill mint">✓ SASL</span>
+      <span class="pill">✓ Disability Aid</span>
+    </div>
+  </div><!-- /achievements -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: RESOURCES
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-resources">
+    <h2 class="page-title">Resources</h2>
+    <p class="page-sub">Help for every situation. You are not alone.</p>
+
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="res-pill active" onclick="filterRes(this)">💜 Mental Health</button>
+      <button class="res-pill"        onclick="filterRes(this)">🛡️ Safety & DV</button>
+      <button class="res-pill"        onclick="filterRes(this)">🌺 Sexual Health</button>
+      <button class="res-pill"        onclick="filterRes(this)">🎓 Academic</button>
+      <button class="res-pill"        onclick="filterRes(this)">💰 Financial</button>
+    </div>
+
+    <div class="card">
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--lav);">🧠</div>
+        <div>
+          <h4>SADAG Helpline</h4>
+          <p>0800 456 789 · Free, 24/7 · Depression & anxiety</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--y100);">🏛️</div>
+        <div>
+          <h4>Campus Counselling</h4>
+          <p>Free sessions for registered students</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--peach);">📞</div>
+        <div>
+          <h4>Lifeline South Africa</h4>
+          <p>0861 322 322 · Crisis support, 24/7</p>
+        </div>
+        <span>›</span>
+      </div>
+      <div class="res-link">
+        <div class="res-icon" style="background:var(--mint);">💚</div>
+        <div>
+          <h4>SANCA Alcohol & Drugs</h4>
+          <p>0861 4SANCA · Confidential support</p>
+        </div>
+        <span>›</span>
+      </div>
+    </div>
+  </div><!-- /resources -->
+
+  <!-- ════════════════════════════════════════════════
+       PAGE: SETTINGS
+  ════════════════════════════════════════════════ -->
+  <div class="page" id="page-settings">
+    <h2 class="page-title">Settings</h2>
+    <p class="page-sub">Customise your SYNK experience.</p>
+
+    <p class="section-label">Your avatar</p>
+    <div class="avatar-grid">
+      <div class="av-opt selected">🦋</div>
+      <div class="av-opt">🌸</div>
+      <div class="av-opt">⭐</div>
+      <div class="av-opt">🌊</div>
+      <div class="av-opt">🌻</div>
+      <div class="av-opt">🐝</div>
+      <div class="av-opt">🌙</div>
+      <div class="av-opt">🦩</div>
+    </div>
+
+    <p class="section-label" style="margin-top:20px;">Guardian settings</p>
+    <div class="card">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Guardian Mode</div>
+          <div class="toggle-sub">Receive ping requests today</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Bypass Do Not Disturb</div>
+          <div class="toggle-sub">Allow help pings at any time</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Show distance to requester</div>
+          <div class="toggle-sub">Only when you accept a request</div>
+        </div>
+        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+    </div>
+
+    <p class="section-label">Appearance</p>
+    <div class="card">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Dark Mode</div>
+          <div class="toggle-sub">Switch app appearance</div>
+        </div>
+        <button class="toggle-switch off" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">High Contrast</div>
+          <div class="toggle-sub">Improve visibility</div>
+        </div>
+        <button class="toggle-switch off" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+      </div>
+    </div>
+
+    <p class="section-label">Account</p>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:14px;padding:6px 0;">
+        <div class="avatar" style="width:48px;height:48px;font-size:22px;">🦋</div>
+        <div>
+          <div style="font-weight:900;font-size:15px;">Amara Dlamini</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:600;">amara@uct.ac.za</div>
+        </div>
+        <div style="margin-left:auto;background:var(--y100);border:2px solid var(--y200);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:800;color:var(--y800);">Female · SA ID</div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <span class="pill">✓ First Aid</span>
+        <span class="pill mint">✓ SASL</span>
+        <span class="pill">✓ Disability Aid</span>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" style="width:100%;margin-bottom:20px;">Sign out</button>
+  </div><!-- /settings -->
+
+  <!-- ════════════════════════════════════════════════
+       BOTTOM NAV
+  ════════════════════════════════════════════════ -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="switchPage('home');setNav('home')">
+      <div class="nav-icon">🏠</div>Home
+    </button>
+    <button class="nav-item" id="nav-request" onclick="switchPage('request');setNav('request')" style="position:relative;">
+      <div class="nav-icon">📡</div>Request
+      <div class="notif-dot"></div>
+    </button>
+    <button class="nav-item" id="nav-achievements" onclick="switchPage('achievements');setNav('achievements')">
+      <div class="nav-icon">🏆</div>Badges
+    </button>
+    <button class="nav-item" id="nav-resources" onclick="switchPage('resources');setNav('resources')">
+      <div class="nav-icon">📖</div>Resources
+    </button>
+    <button class="nav-item" id="nav-settings" onclick="switchPage('settings');setNav('settings')">
+      <div class="nav-icon">⚙️</div>Settings
+    </button>
+  </nav>
+
+  </div><!-- /app-inner -->
+</div><!-- /app-wrap -->
+
+<script>
+  /* ── AUTH NAVIGATION ── */
+  function showAuth(screen) {
+    document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('app-inner').style.display = 'none';
+    const t = document.getElementById('auth-' + screen);
+    if (t) t.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function enterApp() {
+    document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('app-inner').style.display = 'block';
+    switchPage('home');
+    setNav('home');
+    window.scrollTo(0, 0);
+  }
+
+  /* ── APP NAVIGATION ── */
+  function switchPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const t = document.getElementById('page-' + id);
+    if (t) t.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function setNav(id) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const n = document.getElementById('nav-' + id);
+    if (n) n.classList.add('active');
+  }
+
+  /* ── SA ID VALIDATION ── */
+  function validateID(val) {
+    const ok  = document.getElementById('id-ok');
+    const err = document.getElementById('id-err');
+    ok.style.display  = 'none';
+    err.style.display = 'none';
+    if (val.length !== 13 || !/^\d{13}$/.test(val)) return;
+    // Luhn check
+    let sum = 0;
+    for (let i = 0; i < 12; i++) {
+      let d = parseInt(val[i]);
+      if (i % 2 === 1) { d *= 2; if (d > 9) d -= 9; }
+      sum += d;
+    }
+    const valid = (10 - (sum % 10)) % 10 === parseInt(val[12]);
+    if (valid) {
+      const genderDigits = parseInt(val.substring(6, 10));
+      const gender = genderDigits >= 5000 ? 'Male' : 'Female';
+      ok.textContent = '✅ Valid ID — Gender detected: ' + gender;
+      ok.style.display = 'flex';
+    } else {
+      err.style.display = 'flex';
+    }
+  }
+
+  /* ── SKILL TOGGLE ── */
+  function toggleSkill(el) { el.classList.toggle('on'); }
+
+  /* ── AVATAR PICKER (signup) ── */
+  function pickAvatar(el) {
+    document.querySelectorAll('#signup-av-grid .av-opt').forEach(a => a.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  /* ── RESOURCE FILTER ── */
+  function filterRes(el) {
+    document.querySelectorAll('.res-pill').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  /* ── HELP CARD SELECT ── */
+  function selectHelp(el) {
+    document.querySelectorAll('#req-grid .help-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  /* ── SETTINGS AVATAR ── */
+  document.querySelectorAll('.av-opt:not(#signup-av-grid .av-opt)').forEach(av => {
+    av.addEventListener('click', function () {
+      document.querySelectorAll('#page-settings .av-opt').forEach(a => a.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+</script>
+</body>
+</html>

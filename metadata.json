@@ -1,0 +1,5 @@
+{
+  "name": "SYNK",
+  "description": "A gamified, proximity-based campus safety app for students to request help and provide assistance to each other.",
+  "requestFramePermissions": ["geolocation", "notifications"]
+}

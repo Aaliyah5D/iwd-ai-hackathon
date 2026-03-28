@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SYNK – Safety & Request</title>
+  <title>SYNK – Campus Achievements</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -22,138 +22,61 @@
   </div>
 
   <!-- ════════════════════════════════════════════════
-       PAGE: REQUEST
+       PAGE: ACHIEVEMENTS
   ════════════════════════════════════════════════ -->
-  <div class="page" id="page-request">
-    <h2 class="page-title">Request Help</h2>
-    <p class="page-sub">Choose what you need — we'll find someone nearby.</p>
+  <div class="page">
+    <h2 class="page-title">Achievements</h2>
+    <p class="page-sub">Making campus safer, one help at a time.</p>
 
-    <div class="anon-strip">
-      <span style="font-size:24px;">🎭</span>
+    <div class="card card-y" style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+      <div class="avatar" style="width:58px;height:58px;font-size:28px;border-color:var(--y400);">🦋</div>
+      <div style="flex:1;">
+        <div style="font-weight:900;font-size:17px;">Amara Dlamini</div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px;">12 successful helps</div>
+        <div class="progress-track"><div class="progress-fill" style="width:60%;"></div></div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:5px;">8 more to earn Silver Shield 🛡️</div>
+      </div>
+    </div>
+
+    <!-- Unlock notification -->
+    <div class="notif-banner">
+      <div class="nb-icon">🔔</div>
       <div>
-        <div class="label">Request anonymously</div>
-        <div class="sub">Your name won't be shown to the guardian</div>
-      </div>
-      <div style="margin-left:auto;">
-        <button class="toggle-switch" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></button>
+        <div class="nb-title">New badge unlocked!</div>
+        <div class="nb-sub">You earned "Period Pal" 🌸 — tap to celebrate</div>
       </div>
     </div>
 
-    <p class="section-label">What do you need?</p>
-    <div class="help-grid" style="margin-bottom:14px;" id="req-grid">
-      <div class="help-card" onclick="selectHelp(this)">
-        <div class="hc-icon hc-mint">🩸</div>
-        <h3>Pads & Tampons</h3>
-      </div>
-      <div class="help-card" onclick="selectHelp(this)">
-        <div class="hc-icon hc-y">💊</div>
-        <h3>Medical Aid</h3>
-      </div>
-      <div class="help-card" onclick="selectHelp(this)">
-        <div class="hc-icon hc-peach">♿</div>
-        <h3>Disability Aid</h3>
-      </div>
-      <div class="help-card" onclick="selectHelp(this)">
-        <div class="hc-icon hc-lav">🤝</div>
-        <h3>Safety Walk</h3>
-      </div>
+    <p class="section-label">Your badges</p>
+    <div class="badge-row">
+      <div class="badge"><span class="bicon">🥉</span><span>First Help</span></div>
+      <div class="badge"><span class="bicon">💊</span><span>Medic</span></div>
+      <div class="badge"><span class="bicon">🌸</span><span>Period Pal</span></div>
+      <div class="badge locked"><span class="bicon">🛡️</span><span>Silver</span></div>
+      <div class="badge locked"><span class="bicon">🌟</span><span>Star Guard</span></div>
+      <div class="badge locked"><span class="bicon">♿</span><span>Access Hero</span></div>
+      <div class="badge locked"><span class="bicon">🏆</span><span>Gold</span></div>
+      <div class="badge locked"><span class="bicon">💫</span><span>Legend</span></div>
     </div>
 
-    <textarea class="input-field" rows="3" placeholder="Any extra details? (optional)" style="resize:none;"></textarea>
-
-    <button class="btn btn-primary" onclick="showPage('radar')">📡 Ping Guardians Nearby</button>
-    <button class="btn btn-secondary" onclick="window.location.href='Home.html'">Cancel</button>
-  </div><!-- /request -->
-
-  <!-- ════════════════════════════════════════════════
-       PAGE: RADAR
-  ════════════════════════════════════════════════ -->
-  <div class="page" id="page-radar" style="display:none;">
-    <h2 class="page-title" style="text-align:center;">Finding Guardians</h2>
-    <p class="page-sub" style="text-align:center;">Scanning 100m radius around you</p>
-
-    <div class="radar-wrap">
-      <div class="radar">
-        <div class="radar-ring r1"></div>
-        <div class="radar-ring r2"></div>
-        <div class="radar-ring r3"></div>
-        <div class="radar-center">📍</div>
-        <div class="radar-dot rd1"></div>
-        <div class="radar-dot rd2"></div>
-        <div class="radar-dot rd3"></div>
-      </div>
-      <div style="margin-top:16px;font-size:15px;font-weight:900;color:var(--y800);">3 guardians pinged</div>
-      <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px;">Waiting for a response…</div>
+    <p class="section-label" style="margin-top:20px;">Your skills</p>
+    <div>
+      <span class="pill">✓ First Aid</span>
+      <span class="pill mint">✓ SASL</span>
+      <span class="pill">✓ Disability Aid</span>
     </div>
-
-    <div class="card card-g" style="margin-top:4px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="avatar" style="width:42px;height:42px;font-size:20px;">🌸</div>
-        <div>
-          <div style="font-weight:900;font-size:14px;">A guardian is responding</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:600;">Approx. 45m away · First Aid skill</div>
-        </div>
-        <div style="margin-left:auto;background:var(--mint);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:800;color:var(--mint-text);">✓ First Aid</div>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
-      <button class="btn btn-primary btn-sm" onclick="showPage('guardian-tips')">✓ I can help</button>
-      <button class="btn btn-secondary btn-sm" style="margin:0;">✕ I can't now</button>
-    </div>
-    <button class="btn btn-danger btn-sm" onclick="window.location.href='Home.html'" style="width:100%;margin-top:10px;">Cancel request</button>
-  </div><!-- /radar -->
-
-  <!-- ════════════════════════════════════════════════
-       PAGE: GUARDIAN TIPS
-  ════════════════════════════════════════════════ -->
-  <div class="page" id="page-guardian-tips" style="display:none;">
-
-    <div class="notif-banner" style="margin-bottom:18px;">
-      <div class="nb-icon">✨</div>
-      <div>
-        <div class="nb-title">AI Guardian Tips</div>
-        <div class="nb-sub">Someone needs period supplies nearby</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="tip-row">
-        <div class="tip-icon" style="background:var(--mint);">🛡️</div>
-        <div class="tip-text">Lead with kindness, not pity. A simple "I've got you" goes a long way.</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon" style="background:var(--lav);">🤫</div>
-        <div class="tip-text">Be discreet. Hand it over quietly — no announcement needed.</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon" style="background:var(--peach);">💛</div>
-        <div class="tip-text">Ask if they need anything else — water, a break, or company.</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon" style="background:var(--y100);">😊</div>
-        <div class="tip-text">Keep it normal. This is just two people looking out for each other.</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon" style="background:var(--coral);">🚨</div>
-        <div class="tip-text">If they seem unwell, don't leave — call campus health if unsure.</div>
-      </div>
-    </div>
-
-    <button class="btn btn-primary" onclick="window.location.href='Campus.html'">✓✓ Mark help as complete</button>
-    <button class="btn btn-secondary" onclick="window.location.href='Home.html'">Back to home</button>
-  </div><!-- /guardian-tips -->
+  </div><!-- /achievements -->
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <a class="nav-item" href="Home.html">
       <div class="nav-icon">🏠</div>Home
     </a>
-    <a class="nav-item active" href="Saftey.html" style="position:relative;">
+    <a class="nav-item" href="Saftey.html" style="position:relative;">
       <div class="nav-icon">📡</div>Request
       <div class="notif-dot"></div>
     </a>
-    <a class="nav-item" href="Campus.html">
+    <a class="nav-item active" href="Campus.html">
       <div class="nav-icon">🏆</div>Badges
     </a>
     <a class="nav-item" href="Community.html">
@@ -165,22 +88,5 @@
   </nav>
 
 </div><!-- /app-wrap -->
-
-<script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    const t = document.getElementById('page-' + id);
-    if (t) t.style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-
-  function selectHelp(el) {
-    document.querySelectorAll('#req-grid .help-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-
-  // Show request page by default
-  document.getElementById('page-request').style.display = 'block';
-</script>
 </body>
 </html>

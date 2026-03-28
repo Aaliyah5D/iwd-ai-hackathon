@@ -3,24 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>SYNK</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <!--Add in icon here-->
-            <div class="nav-links"></div>
-            <ul>
+<body class="landing">
+    <!-- Skip to content link -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Header / Navigation -->
+    <header class="landing-header">
+        <nav class="landing-nav" aria-label="Primary">
+            <a class="landing-brand" href="Home.html">SYNK</span></a>
+            <ul class="landing-nav-links">
                 <li><a href="Home.html">Home</a></li>
                 <li><a href="Campus.html">Campus</a></li>
                 <li><a href="Community.html">Community</a></li>
                 <li><a href="Health.html">Health</a></li>
-                <li><a href="Saftey.html">Saftey</a></li>
-                <li><a href="Profile.html">Profile</a></li>  <!--Consider tuening this into an icon instead of it saying profile-->
+                <li><a href="Safety.html">Safety</a></li>
+                <li><a href="Profile.html">Profile</a></li>
             </ul>
+            <div class="landing-nav-actions">
+                <a class="btn btn-ghost" href="#login">Log in</a>
+                <a class="btn btn-primary" href="#register">Register</a>
+            </div>
         </nav>
-</header>
-    
+    </header>
+
+    <!-- Main content -->
+    <main class="landing-main" id="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div>
+                <p class="pill">SYNK- Smart Campus </p>
+                <h1 id="hero-title">University life, made smarter and safer for women in South Africa</h1>
+                <p class="hero-lead">
+                    SYNK brings practical tools, discreet support, and an AI assistant together in one place—so students can focus on studies and community safely across South African campuses.
+                </p>
+                <div class="hero-cta">
+                    <a class="btn btn-primary" href="#register">Create an account</a>
+                    <a class="btn btn-ghost" href="#features">Explore features</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel" aria-label="Summary">
+                <h2>What is SYNK?</h2>
+                <p>
+                    A web application designed for students and staff at South African universities: period support, safety features, campus navigation, timetabling, health check-ins, peer community, mentorship—and a chatbot assistant to help you find what you need quickly.
+                </p>
+            </aside>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about" aria-labelledby="about-title">
+            <h2 id="about-title">About the web app</h2>
+            <p class="section-intro">
+                SYNK is an AI-powered companion for day-to-day university life, centered on women’s safety and wellbeing. It connects users to campus facilities, helps stay organised, and offers safer navigation across South African campuses.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section" id="features" aria-labelledby="features-title">
+            <h2 id="features-title">Features</h2>
+            <p class="section-intro">
+                Overview of what SYNK offers. Each module focuses on student safety, accessibility, wellbeing, and community.
+            </p>
+
+            <div class="feature-grid">
+                <!-- Period support -->
+                <article class="card">
+                    <h3>Period Support</h3>
+                    <ul>
+                        <li>Request pads or other essentials discreetly through campus distribution points.</li>
+                        <li>Optional reminders and self-care tips during your cycle.</li>
+                    </ul>
+                </article>
+
+                <!-- Safety -->
+                <article class="card">
+                    <h3>Safety & Security</h3>
+                    <ul>
+                        <li><strong>Emergency SOS:</strong> alert campus security and trusted contacts.</li>
+                        <li><strong>Live location sharing:</strong> share location with selected contacts.</li>
+                        <li><strong>Safe route navigation:</strong> avoid unsafe or poorly lit areas.</li>
+                        <li><strong>Incident reporting:</strong> report harassment, broken lights, or unsafe spots anonymously.</li>
+                    </ul>
+                </article>
+
+                <!-- Smart Campus Life -->
+                <article class="card">
+                    <h3>Smart Campus Life</h3>
+                    <ul>
+                        <li><strong>Class schedule organiser:</strong> timetables, assignment deadlines, calendar view.</li>
+                        <li><strong>Room & facility finder:</strong> lecture halls, study spaces, accessible toilets.</li>
+                        <li><strong>Accessibility support:</strong> request assistance and view accessible routes.</li>
+                    </ul>
+                </article>
+
+                <!-- Health & Wellbeing -->
+                <article class="card">
+                    <h3>Health & Wellbeing</h3>
+                    <ul>
+                        <li>Quick access to period products on campus.</li>
+                        <li><strong>Mental health check-ins:</strong> daily mood tracker and links to counselling services.</li>
+                    </ul>
+                </article>
+
+                <!-- Community -->
+                <article class="card">
+                    <h3>Community & Support</h3>
+                    <ul>
+                        <li><strong>Women’s forum:</strong> share advice, events, and local tips.</li>
+                        <li><strong>Mentorship & tutoring:</strong> connect with peers or academic mentors.</li>
+                    </ul>
+                </article>
+
+                <!-- AI & Accounts -->
+                <article class="card">
+                    <h3>AI Assistant & Accounts</h3>
+                    <ul>
+                        <li><strong>Chatbot:</strong> get help finding services and features.</li>
+                        <li><strong>Secure login & registration:</strong> optional anonymous identity for sensitive actions.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Privacy / Anonymous Identity -->
+        <section class="section" id="privacy" aria-labelledby="privacy-title">
+            <h2 id="privacy-title">Anonymous Identity</h2>
+            <p class="section-intro">
+                Use Smart Campus SA at the level you are comfortable with. Features like incident reporting or forum posts can be pseudonymous. Sensitive functions (SOS or mentorship) require verified accounts for effective response.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <p>
+            <strong>Smart Campus SA</strong> — Concept for an inclusive, AI-assisted South African campus companion.
+            Sections: <a href="Campus.html">Campus</a>, <a href="Community.html">Community</a>, <a href="Health.html">Health</a>, <a href="Safety.html">Safety</a>.
+        </p>
+    </footer>
 </body>
 </html>
